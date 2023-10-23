@@ -1,0 +1,8 @@
+__pycache__/
+env/
+instance/
+migrations/
+obj/
+project/__pycache__/
+project.pyproj
+project.pyproj.user
