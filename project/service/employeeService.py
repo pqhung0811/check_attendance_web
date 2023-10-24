@@ -18,11 +18,17 @@ class EmployeeService(object):
         return employee
     
     @staticmethod
-    def addNewEmployee(username, password, email, phoneNumber):
-        employee = Employee(username=username, password=password, email=email, phoneNumber=phoneNumber)
+    def addNewEmployee(username, password):
+        employee = Employee(username=username, password=password)
         db.session.add(employee)
+        db.session.commit()
         return
     
+    @staticmethod
+    def updateEmployeeInfomation():
+        db.session.commit()
+        return
+
     @staticmethod
     def checkUsernameExist(username):
         employeeExists = Employee.query.filter_by(username=username).exists()
@@ -35,6 +41,5 @@ class EmployeeService(object):
         
         return db.session.query(employeeExists).scalar()
 
-    """description of class"""
 
 

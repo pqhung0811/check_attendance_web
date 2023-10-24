@@ -5,6 +5,7 @@ This script runs the project application using a development server.
 from os import environ
 from project import app, db
 from flask_migrate import Migrate
+from project.service.employeeService import EmployeeService
 from project.utils.detectFace import faceComparing
 from project.utils.detectFace import detectFace
 from project.utils.detectFacialExpression import detectMain
@@ -12,17 +13,14 @@ from project.utils.detectFacialExpression import detectMain
 migrate = Migrate(app, db)
 
 if __name__ == '__main__':
-    # HOST = environ.get('SERVER_HOST', 'localhost')
-    # try:
-    #     PORT = int(environ.get('SERVER_PORT', '5555'))
-    # except ValueError:
-    #     PORT = 5555
-    # app.run(HOST, PORT, debug=True)
+    HOST = environ.get('SERVER_HOST', 'localhost')
+    try:
+        PORT = int(environ.get('SERVER_PORT', '5555'))
+    except ValueError:
+        PORT = 5555
+    app.run(HOST, PORT, debug=True)
 
-
-
-    
-    detectMain("D:/CV/CV/anh/iu1.jpg")
+ 
 
     # image1 = detectFace("D:/CV/CV/anh/iu1.jpg")
     # image2 = detectFace("D:/CV/CV/anh/iu2.jpg")
