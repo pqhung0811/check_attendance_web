@@ -1,10 +1,7 @@
-from sqlalchemy import Null
 from project import app
-from flask import jsonify, request
+from flask import jsonify, request, Blueprint
 from project.model.employee import Employee
 from project.service.employeeService import EmployeeService
-
-theEmployee = Null
 
 @app.route('/api/employee/<id>', methods=['GET'])
 def getEmployeeByIdRouter(id):
@@ -22,7 +19,6 @@ def login():
     password = data.get('password')
 
     employee = EmployeeService.getEmployeeByUsernamePassword(username, password)
-    theEmployee = employee
     if employee:
         return jsonify({"message": "Login successful"})
     else:
@@ -42,15 +38,16 @@ def Register():
     else:
         return jsonify({"message": "username exists"}), 401
         
-@app.route('/api/employee/register/update', methods=['POST'])
-def updateInfomation():
+@app.route('/api/employee/update/<int:id>', methods=['PUT'])
+def updateInfomation(id):
     data = request.json
-        
-    theEmployee.fullname = data.get('fullname')
-    theEmployee.phoneNumber = data.get('phoneNumber')
-    theEmployee.email = data.get('email')
-    theEmployee.dateOfBirth = data.get('dateOfBirth')
-    theEmployee.departmentId = data.get('departmentId')
+    
+    employee = EmployeeService.getEmployeeById(id=id)
+    employee.fullname = data.get('fullname', employee.fullname)
+    employee.phoneNumber = data.get('phoneNumber',employee.phoneNumber)
+    employee.email = data.get('email', employee.email)
+    employee.dateOfBirth = data.get('dateOfBirth', employee.dateOfBirth)
+    employee.departmentId = data.get('departmentId', employee.departmentId)
 
     EmployeeService.updateEmployeeInfomation()
     return jsonify({"message": "update successflly"})
